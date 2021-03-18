@@ -24,7 +24,7 @@ export default defineComponent({
 }
 #router {
   border: 1px solid red;
-  flex: 1;
+  flex: 10;
   padding: 15px;
 }
 </style>
