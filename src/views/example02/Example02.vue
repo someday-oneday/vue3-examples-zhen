@@ -1,88 +1,89 @@
 <template>
   <div>
-    <h1>data()</h1>
+    <h1>composition</h1>
     <p>
-      {{ message }}
+      与Composition-API基本示例代码相同，但按逻辑聚合相关操作为独立的函数。
+    </p>
+    <h1>useMessage()函数</h1>
+    <p>
+      创建useMessage()函数，聚合message相关逻辑操作。包括计算属性/函数。
+      <br />
+      messageRef: {{ messageRef }}
+      <br />
+      <button type="button" @click="changeMessage">changeMessage</button>
     </p>
     <hr />
-    <h1>Computed</h1>
-    <p>基本绑定，缺少null判断等</p>
+    <h1>useUser()函数</h1>
     <p>
-      对于所有的数据绑定，Vue.js 都提供了完全的 JavaScript
-      表达式支持，表达式会作为 JavaScript 解析
+      创建useUser()函数，聚合user对象数据相关逻辑操作。包括计算属性/函数。
+      <br />
+      基于Proxy代理对象能够感知新添加的属性
+      <br />
+      <button type="button" @click="changeAddress">changeAddress</button>
+      <br />
+      {{ userRef.name }} / {{ userRef.insertTime }} / {{ userRef.address }}
+      <br />
+      计算属性返回函数：{{ formatDateFunc(userRef.insertTime) }}
     </p>
-    {{ isShow ? "为true显示" : "为false显示" }}
-    <br />
-    {{ reversMessage }}
     <hr />
-    {{ user.name }}
-    <br />
-    <button type="button" @click="change">change</button>
-    <br />
-    {{ user.insertTime }}
-    <br />
-    {{ myDate }}
-    <br />
-    <p>
-      data中属性必须提前声明。data中的响应式属性数据，在组件创建时确定，数据可更改，但默认不能添加新属性
-      。user.address属性，必须提前声明
-    </p>
-    <button @click="addAddress">change</button>
-    <br />
-    {{ user.address }}
-    <hr />
-    <p>
-      计算属性，默认声明的是属性的getter方法，不支持传参。但JS中，参数/属性可以是一个，函数
-    </p>
-    {{ myReplace(user.insertTime) }}
-    <hr />
-    <h1>watch</h1>
-    <p>
-      watch监听器中允许执行异步方法，当仅仅需要监听当值改变而改变值时，应使用计算属性。
-    </p>
-    <button @click="isShow = !isShow">change isShow</button>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { User } from "@/datasource/Types";
+import { computed, defineComponent, Ref, ref } from "vue";
+// 聚合所有与message相关的业务逻辑
+// 传入Ref类型响应式对象
+function useMessage(msg: Ref<string>) {
+  const reversMesage = computed(() =>
+    msg.value
+      .split("")
+      .reverse()
+      .join("")
+  );
+  const changeMessage = () => {
+    msg.value = "composition-api";
+  };
+  return {
+    reversMesage,
+    changeMessage
+  };
+}
+// 聚合所有与user相关的业务逻辑
+function useUser(user: Ref<User>) {
+  const formatDateFunc = computed(() => (data: string) =>
+    data.replace("T", " ")
+  );
+  const changeAddress = () => {
+    user.value.address = (Math.random() * 1000).toFixed(0).toString();
+  };
+  return {
+    formatDateFunc,
+    changeAddress
+  };
+}
 
 export default defineComponent({
-  data: () => ({
-    isShow: false,
-    message: "hello",
-    user: {
+  setup() {
+    // 初始化组件数据
+    const user: User = {
       name: "BO",
-      insertTime: "2046-04-09T11:04:25",
-      address: ""
-    }
-  }),
-  methods: {
-    change() {
-      this.user.name = "SUN";
-    },
-    addAddress() {
-      this.user.address = "956";
-    }
-  },
-
-  computed: {
-    myDate(): string {
-      return this.user.insertTime.replace("T", " ");
-    },
-    reversMessage(): string {
-      return this.message
-        .split("")
-        .reverse()
-        .join("");
-    },
-    myReplace() {
-      return (date: string) => date.replace("T", " ");
-    }
-  },
-  watch: {
-    isShow(newValue, oldValue) {
-      alert(`新值为${newValue}`);
-    }
+      insertTime: "2046-04-09T11:04:25"
+    };
+    // 创建对应的响应式对象
+    const messageRef = ref("hello world");
+    const userRef = ref(user);
+    // 调用独立函数
+    const { reversMesage, changeMessage } = useMessage(messageRef);
+    const { formatDateFunc, changeAddress } = useUser(userRef);
+    // 返给视图
+    return {
+      messageRef,
+      reversMesage,
+      changeMessage,
+      userRef,
+      formatDateFunc,
+      changeAddress
+    };
   }
 });
 </script>
