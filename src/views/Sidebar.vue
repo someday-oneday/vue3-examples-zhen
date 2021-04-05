@@ -47,6 +47,28 @@
         </ul>
       </li>
       <li>
+        directives
+        <ul>
+          <li>
+            <router-link to="/example05-01">template & if & v-bind</router-link>
+          </li>
+          <li>
+            <router-link to="/example05-02">v-bind & watch</router-link>
+          </li>
+          <li><router-link to="/example05-03">v-for</router-link></li>
+        </ul>
+      </li>
+      <li><router-link to="/example05-04">Async Component</router-link></li>
+      <li>
+        Form Input Bindings
+        <ul>
+          <li><router-link to="/example06-01">v-module</router-link></li>
+          <li><router-link to="/example06-02">Examples</router-link></li>
+        </ul>
+      </li>
+
+      <li>
+        Vuex
         <ul>
           <li>
             <router-link to="/example07-01">
@@ -56,6 +78,16 @@
           <li>
             <router-link to="/example07-02">
               Mutations
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/example07-03">
+              actions
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/example07-04">
+              mapState & Getters
             </router-link>
           </li>
         </ul>
