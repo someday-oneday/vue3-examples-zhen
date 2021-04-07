@@ -87,7 +87,37 @@ component: () => import("@/views/example04/Example04-01.vue")
     props: true,
     path: "/example07-04",
     component: () => import("@/views/example07/Example07-04.vue")
-  }
+  },
+  {
+    props: true,
+    path: "/example08-01",
+    component: () => import("@/views/example08/Example08-01.vue")
+  },
+  {
+    props: true,
+    path: "/example08-02",
+    component: () => import("@/views/example08/Example08-02.vue")
+  },
+  {
+    props: true,
+    path: "/example09-01",
+    component: () => import("@/views/example09/Example09-01.vue")
+  },
+  {
+    props: true,
+    path: "/example09-02",
+    component: () => import("@/views/example09/Example09-02.vue")
+  },
+  {
+    props: true,
+    path: "/example10-01",
+    component: () => import("@/views/example10/Example10-01.vue")
+  },
+  {
+    props: true,
+    path: "/example10-02",
+    component: () => import("@/views/example10/Example10-02.vue")
+  },
 ];
 
 const router = createRouter({

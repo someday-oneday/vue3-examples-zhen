@@ -21,12 +21,17 @@ const myState: State = {
   exception: ""
 };
 const myMutations: MutationTree<State> = {
-  [vxt.UPDATE_USER]: (state, data: User) => (state.user = data)
+  [vxt.UPDATE_USER]: (state, data: User) => (state.user = data),
+  [vxt.LIST_COURSES]: (state, data: Course[]) => (state.courses = data)
 };
 const myActions: ActionTree<State, State> = {
   [vxt.UPDATE_USER]: ({commit}, data: User) => {
     setTimeout(() => commit(vxt.UPDATE_USER, data), 2000);
-  }
+  },
+[vxt.LIST_COURSES]: ({commit}) => {
+  const courses = listCourses();
+  setTimeout(() => commit(vxt.LIST_COURSES, courses), 2000
+);}
 };
 const myGetters: GetterTree<State, State> = {
   premission: state => (level: number) => state.user?.level == level,
