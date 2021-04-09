@@ -32,9 +32,9 @@ const resulVO: ResultVO = {
 
 //reply的参数列表 (status, data, headers)
 //status，http状态码  data是返回的json数据
-mock.onGet("users/12").reply(200, {
+mock.onGet("user/12").reply(200, {
   code: 200,
-  data: { user: { id: 1, name: "BO" } as User }
+  data: { user: { id: 1, name: "BO"} as User}
 } as ResultVO);
 
 // 等价于 users/任意值

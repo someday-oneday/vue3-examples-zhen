@@ -2,6 +2,8 @@ import { ActionTree, createStore, GetterTree, MutationTree } from "vuex";
 import { Course, User } from "@/datasource/Types";
 import { listCourses } from "@/datasource/DataSource";
 import * as vxt from "./VuexTypes";
+import axios from "@/axios";
+import { ResultVO } from "@/mock";
 
 export interface State {
   user: User;
@@ -22,7 +24,8 @@ const myState: State = {
 };
 const myMutations: MutationTree<State> = {
   [vxt.UPDATE_USER]: (state, data: User) => (state.user = data),
-  [vxt.LIST_COURSES]: (state, data: Course[]) => (state.courses = data)
+  [vxt.LIST_COURSES]: (state, data: Course[]) => (state.courses = data),
+  [vxt.LIST_USER_COURSES]: (state, data: Course[]) => (state.userCourses = data),
 };
 const myActions: ActionTree<State, State> = {
   [vxt.UPDATE_USER]: ({commit}, data: User) => {
@@ -31,7 +34,12 @@ const myActions: ActionTree<State, State> = {
 [vxt.LIST_COURSES]: ({commit}) => {
   const courses = listCourses();
   setTimeout(() => commit(vxt.LIST_COURSES, courses), 2000
-);}
+);},
+
+[vxt.LIST_USER_COURSES]: async ({commit }, userId: string) => {
+  const resp = await axios.get<ResultVO>(`users/${userId}/courses`);
+  commit(vxt.LIST_USER_COURSES, resp.data.data.courses);
+},
 };
 const myGetters: GetterTree<State, State> = {
   premission: state => (level: number) => state.user?.level == level,

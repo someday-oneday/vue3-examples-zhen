@@ -118,6 +118,36 @@ component: () => import("@/views/example04/Example04-01.vue")
     path: "/example10-02",
     component: () => import("@/views/example10/Example10-02.vue")
   },
+  {
+    props: true,
+    path: "/example11-01",
+    component: () => import("@/views/example11/Example11-01.vue"),
+    children: [
+      {
+        path:"",
+        component: () => import("@/views/example11/About.vue")
+      },
+      {
+        path: "course",
+        components: {
+          default: () => import("@/views/example11/Course.vue"),
+          button: () => import("@/views/example11/AddCourseButton.vue")
+        }},
+        
+        {
+          path:"/homework",
+          components: {
+            default: () =>import("@/views/example11/Homework.vue"),
+            button: () => import("@/views/example11/AddHomeworkButton.vue")
+          }
+        }
+    ]
+  },
+  {
+    props: true,
+    path: "/example12/students/:sid/homeworks/:hid",
+    component: () => import("@/views/example12/Example12-01.vue")
+  },
 ];
 
 const router = createRouter({

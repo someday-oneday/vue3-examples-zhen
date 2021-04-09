@@ -2,17 +2,21 @@
   <div id="app">
     <sidebar id="sidebar" />
     <router-view id="router" :key="$route.path" />
-    <alertDialog />
+    <alertdialog v-if="exception.length > 0" />
   </div>
 </template>
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from "vue";
 import sidebar from "@/views/Sidebar.vue";
-const alertDialog = defineAsyncComponent(() =>
+import { mapState } from "vuex";
+const alertdialog = defineAsyncComponent(() =>
   import("@/components/AlertDialog.vue")
 );
 export default defineComponent({
-  components: { sidebar, alertDialog }
+  components: { sidebar, alertdialog },
+  computed: {
+    ...mapState(["exception"])
+  }
 });
 </script>
 <style>
