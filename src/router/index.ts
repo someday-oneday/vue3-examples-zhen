@@ -148,6 +148,40 @@ component: () => import("@/views/example04/Example04-01.vue")
     path: "/example12/students/:sid/homeworks/:hid",
     component: () => import("@/views/example12/Example12-01.vue")
   },
+  {
+    props: true,
+    path: "/homework01",
+    component: () => import("@/views/homework01/Homework01.vue")
+  },
+  {
+    props: true,
+    path: "/homework02",
+    component: () => import("@/views/homework02/Home.vue"),
+    children: [
+      {
+        props: true,
+        path: "location",
+        component: () => import("@/views/homework02/Location.vue")
+      },
+      {
+        name: "foods",
+        props: true,
+        path: "foods",
+        component: () => import("@/views/homework02/Foods.vue")
+      },
+      {
+        name: "shops",
+        props: true,
+        path: "shops/:sid",
+        component: () => import("@/views/homework02/Shop.vue")
+      },
+      {
+        props: true,
+        path: "orders",
+        component: () => import("@/views/homework02/Order.vue")
+      }
+    ]
+  }
 ];
 
 const router = createRouter({
